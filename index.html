@@ -74,7 +74,7 @@
     </thead>
     <tbody>
       <tr>
-        <td data-label="Uplift Date">2024-01-25</td>
+        <td data-label="Uplift Date" class="date">2024-01-25</td>
         <td data-label="Invoice Number">90070094</td>
         <td data-label="Reg. Number">YIARI</td>
         <td data-label="Airport">AYT</td>
@@ -82,10 +82,10 @@
         <td data-label="Volume (LT)">5105</td>
         <td data-label="Amount">4556.57</td>
         <td data-label="Details">05.02.2024 TARIHINDE MARWAN’A TESLIM EDILDI</td>
-        <td data-label="Date">2024-02-05</td>
+        <td data-label="Date" class="date">2024-02-05</td>
       </tr>
       <tr>
-        <td data-label="Uplift Date">2024-01-27</td>
+        <td data-label="Uplift Date" class="date">2024-01-27</td>
         <td data-label="Invoice Number">90070095</td>
         <td data-label="Reg. Number">YIARH</td>
         <td data-label="Airport">AYT</td>
@@ -93,10 +93,26 @@
         <td data-label="Volume (LT)">4728</td>
         <td data-label="Amount">4221.90</td>
         <td data-label="Details">05.02.2024 TARIHINDE MARWAN’A TESLIM EDILDI</td>
-        <td data-label="Date">2024/02/05</td>
+        <td data-label="Date" class="date">2024-02-05</td>
       </tr>
-      <!-- Add more rows as needed -->
     </tbody>
   </table>
+
+  <script>
+    // Format dates in DD/MM/YYYY
+    function formatDate(isoDateStr) {
+      const date = new Date(isoDateStr);
+      if (isNaN(date)) return isoDateStr;
+      const day = String(date.getDate()).padStart(2, '0');
+      const month = String(date.getMonth() + 1).padStart(2, '0');
+      const year = date.getFullYear();
+      return `${day}/${month}/${year}`;
+    }
+
+    // Find all date cells and reformat them
+    document.querySelectorAll("td.date").forEach(td => {
+      td.textContent = formatDate(td.textContent.trim());
+    });
+  </script>
 </body>
 </html>
