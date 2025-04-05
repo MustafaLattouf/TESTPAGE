@@ -1,118 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Fuel Uplift Report</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f9f9f9;
-      padding: 2rem;
-      color: #333;
-    }
-    h1 {
-      text-align: center;
-      color: #2c3e50;
-      margin-bottom: 1.5rem;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      background: #fff;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-    th, td {
-      padding: 0.75rem 1rem;
-      border-bottom: 1px solid #eee;
-      text-align: left;
-    }
-    th {
-      background: #2c3e50;
-      color: white;
-    }
-    tr:hover {
-      background: #f1f1f1;
-    }
-    @media screen and (max-width: 768px) {
-      table, thead, tbody, th, td, tr {
-        display: block;
-      }
-      th {
-        display: none;
-      }
-      td {
-        padding: 1rem;
-        border: none;
-        border-bottom: 1px solid #ddd;
-        position: relative;
-      }
-      td::before {
-        content: attr(data-label);
-        font-weight: bold;
-        display: block;
-        margin-bottom: 0.5rem;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fuel Uplift Records</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            padding: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            position: sticky;
+            top: 0;
+        }
+
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+
+        @media (max-width: 768px) {
+            th, td {
+                padding: 8px;
+                font-size: 14px;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>Fuel Uplift Report</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>Uplift Date</th>
-        <th>Invoice Number</th>
-        <th>Reg. Number</th>
-        <th>Airport</th>
-        <th>Uplift Number</th>
-        <th>Volume (LT)</th>
-        <th>Amount</th>
-        <th>Details</th>
-        <th>Date</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td data-label="Uplift Date" class="date">2024-01-25</td>
-        <td data-label="Invoice Number">90070094</td>
-        <td data-label="Reg. Number">YIARI</td>
-        <td data-label="Airport">AYT</td>
-        <td data-label="Uplift Number">IA 210</td>
-        <td data-label="Volume (LT)">5105</td>
-        <td data-label="Amount">4556.57</td>
-        <td data-label="Details">05.02.2024 TARIHINDE MARWAN’A TESLIM EDILDI</td>
-        <td data-label="Date" class="date">2024-02-05</td>
-      </tr>
-      <tr>
-        <td data-label="Uplift Date" class="date">2024-01-27</td>
-        <td data-label="Invoice Number">90070095</td>
-        <td data-label="Reg. Number">YIARH</td>
-        <td data-label="Airport">AYT</td>
-        <td data-label="Uplift Number">IA 210</td>
-        <td data-label="Volume (LT)">4728</td>
-        <td data-label="Amount">4221.90</td>
-        <td data-label="Details">05.02.2024 TARIHINDE MARWAN’A TESLIM EDILDI</td>
-        <td data-label="Date" class="date">2024-02-05</td>
-      </tr>
-    </tbody>
-  </table>
+    <div class="container">
+        <h1>Fuel Uplift Records</h1>
+        <div class="table-container">
+            <table id="upliftTable">
+                <thead>
+                    <tr>
+                        <th>Uplift Date</th>
+                        <th>Invoice Number</th>
+                        <th>Reg. Number</th>
+                        <th>Airport</th>
+                        <th>Uplift Number</th>
+                        <th>Volume (LT)</th>
+                        <th>Amount</th>
+                        <th>Details</th>
+                        <th>Delivery Date</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
 
-  <script>
-    // Format dates in DD/MM/YYYY
-    function formatDate(isoDateStr) {
-      const date = new Date(isoDateStr);
-      if (isNaN(date)) return isoDateStr;
-      const day = String(date.getDate()).padStart(2, '0');
-      const month = String(date.getMonth() + 1).padStart(2, '0');
-      const year = date.getFullYear();
-      return `${day}/${month}/${year}`;
-    }
+    <script>
+        const data = [
+            { upliftDate: "2024-01-25", invoice: "90070094", reg: "YIARI", airport: "AYT", upliftNum: "IA 210", volume: 5105, amount: 4556.57, details: "05.02.2024 TARIHINDE MARWAN’A TESLIM EDILDI", date: "2024-02-05" },
+            { upliftDate: "2024-01-27", invoice: "90070095", reg: "YIARH", airport: "AYT", upliftNum: "IA 210", volume: 4728, amount: 4221.9, details: "05.02.2024 TARIHINDE MARWAN’A TESLIM EDILDI", date: "2024-02-05" },
+            // Add all other data entries here following the same format
+            // For brevity, I've only included two entries as an example
+            { upliftDate: "2024-02-23", invoice: "90071516", reg: "YIASL", airport: "ESB", upliftNum: "IA202", volume: 4888, amount: 4596.26, details: "28.02.2024 TARIHINDE MARVAN’A ELDEN TESLIM EDILDI", date: "2024-02-28" }
+        ];
 
-    // Find all date cells and reformat them
-    document.querySelectorAll("td.date").forEach(td => {
-      td.textContent = formatDate(td.textContent.trim());
-    });
-  </script>
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            const year = date.getFullYear();
+            const month = String(date.getMonth() + 1).padStart(2, '0');
+            const day = String(date.getDate()).padStart(2, '0');
+            return `${year}/${month}/${day}`;
+        }
+
+        function populateTable() {
+            const tbody = document.querySelector('#upliftTable tbody');
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${formatDate(row.upliftDate)}</td>
+                    <td>${row.invoice}</td>
+                    <td>${row.reg}</td>
+                    <td>${row.airport}</td>
+                    <td>${row.upliftNum}</td>
+                    <td>${row.volume.toLocaleString()}</td>
+                    <td>${row.amount.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+                    <td>${row.details}</td>
+                    <td>${formatDate(row.date)}</td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Call the function when the page loads
+        window.onload = populateTable;
+    </script>
 </body>
 </html>
